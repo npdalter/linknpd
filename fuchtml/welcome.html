@@ -1,0 +1,29 @@
+<head>
+    <meta charset="utf-8">
+    <title>RUN RUN</title>
+</head>
+<html>
+<script>
+    var td = new Date();
+    var mon = td.toLocaleDateString().split("/");
+    var thismonth;
+
+    if (parseInt(mon[1]) < 10) {
+        thismonth = "0" + mon[1];
+    } else {
+        thismonth = mon[1];
+    }
+</script>
+
+
+<body>
+    <div class="bg">
+        <img id="bgp" src="">
+    </div>
+    <script>
+        myBg = document.getElementById("bgp"); //searches for and detects the input element from the 'myButton' id
+        myBg.src = "./ALL_1920_1080/" + thismonth + "_1920x1080.jpg"; //changes the value
+    </script>
+</body>
+
+</html>

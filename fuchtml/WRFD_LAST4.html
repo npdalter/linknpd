@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>For urgent</title>
+</head>
+
+<body>
+
+    <script>
+        // This is the function for strin format//
+        String.prototype.format = function(args) {
+            var str = this;
+            return str.replace(String.prototype.format.regex, function(item) {
+                var intVal = parseInt(item.substring(1, item.length - 1));
+                var replace;
+                if (intVal >= 0) {
+                    replace = args[intVal];
+                } else if (intVal === -1) {
+                    replace = "{";
+                } else if (intVal === -2) {
+                    replace = "}";
+                } else {
+                    replace = "";
+                }
+                return replace;
+            });
+        };
+        String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
+        var td = new Date();
+        var yd = new Date(new Date().setDate(new Date().getDate() - 1));
+        var tds = td.toLocaleDateString().split("/");
+        var yds = yd.toLocaleDateString().split("/");
+        var jude = td.getHours();
+        var lead
+        var startime
+        if (jude <= 6) {
+            lead = "12";
+            startime = new Date(yds[0], yds[1] - 1, yds[2], lead, lead, 0);
+        } else if (jude <= 12) {
+            lead = "18";
+            startime = new Date(yds[0], yds[1] - 1, yds[2], lead, 0, 0);
+        } else if (jude <= 18) {
+            lead = "00";
+            startime = new Date(tds[0], tds[1] - 1, tds[2], 0, 0, 0);
+        } else {
+            lead = "06";
+            startime = new Date(tds[0], tds[1] - 1, tds[2], 6, 0, 0);
+        }
+        //document.write(lead)
+        function intbtn(eachtime) {
+            var stime = eachtime.toLocaleDateString().split("/");
+            var lasthr = eachtime.getHours();
+            var thisyear;
+            var thismonth;
+            var thisday;
+            thisyear = stime[0].slice(2, 4);
+            if (stime[1] < 10) {
+                thismonth = "0" + stime[1];
+            } else {
+                thismonth = stime[1];
+            }
+            if (stime[2] < 10) {
+                thisday = "0" + stime[2];
+            } else {
+                thisday = stime[2];
+            }
+            if (lasthr < 10) {
+                lasthr = "0" + lasthr
+            }
+            return thisyear + thismonth + thisday + lasthr;
+        }
+        //document.write(intbtn(startime));
+
+        var j;
+        var initime = [intbtn(startime)];
+        var tmptime;
+        //document.write(initime)
+        for (j = 1; j < 7; j++) {
+            tmptime = new Date(startime.setHours(startime.getHours() - 6));
+            initime.push(intbtn(tmptime));
+        }
+        //document.write(initime);
+        //document.write(nn)
+        //document.write(initime)
+        var model = ["WRFM04_NEW"]
+        var twrftau = ["003", "006", "009", "012", "015", "018", "021", "024", "027", "030", "033", "036", "039", "042", "045", "048", "051", "054", "057", "060", "063", "066", "069", "072", "075", "078", "081", "084", "090", "096", "102", "108", "114", "120"];
+        //ntau: now, p1tau:previous run p2tau:previous two run ... as so on
+        function myFunction1() {
+            for (x in twrftau) {
+                document.getElementById("ntau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[x], initime[0]]);
+                p1 = parseInt(x) + parseInt(2)
+                if (parseInt(x) < parseInt(32)) {
+                    document.getElementById("p1tau" + twrftau[p1]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p1], initime[1]]);
+                }
+                p2 = parseInt(x) + parseInt(4)
+                if (parseInt(x) < parseInt(30)) {
+                    document.getElementById("p2tau" + twrftau[p2]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p2], initime[2]]);
+                }
+                p3 = parseInt(x) + parseInt(6)
+                if (parseInt(x) < parseInt(28)) {
+                    document.getElementById("p3tau" + twrftau[p3]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p3], initime[3]]);
+                }
+            }
+
+            document.getElementById("ntau").innerText = "{0}".format([initime[0]])
+            document.getElementById("p1tau").innerText = "{0}".format([initime[1]])
+            document.getElementById("p2tau").innerText = "{0}".format([initime[2]])
+            document.getElementById("p3tau").innerText = "{0}".format([initime[3]])
+        }
+
+        function image(img) {
+
+            var src = img.src;
+
+            window.open(src, "box", "height=600,width=600");
+
+        }
+
+        window.onload = myFunction1;
+    </script>
+    <h1>WRFD過去4報</h1>
+    <br></br>
+    <table>
+        <tr>
+            <th>Initialtime</th>
+            <th>000-003</th>
+            <th>003-006</th>
+            <th>006-009</th>
+            <th>009-012</th>
+            <th>012-015</th>
+            <th>015-018</th>
+            <th>018-021</th>
+            <th>021-024</th>
+            <th>024-027</th>
+            <th>027-030</th>
+            <th>030-033</th>
+            <th>033-036</th>
+            <th>036-039</th>
+            <th>039-042</th>
+            <th>042-045</th>
+            <th>045-048</th>
+            <th>048-051</th>
+            <th>051-054</th>
+            <th>054-057</th>
+            <th>057-060</th>
+            <th>060-063</th>
+            <th>063-066</th>
+            <th>066-069</th>
+            <th>069-072</th>
+            <th>072-075</th>
+            <th>075-078</th>
+            <th>078-081</th>
+            <th>081-084</th>
+            <th>084-090</th>
+            <th>090-096</th>
+            <th>096-102</th>
+            <th>102-108</th>
+            <th>108-114</th>
+            <th>114-120</th>
+
+        </tr>
+        <tr>
+            <td id="ntau"></td>
+            <td><img id="ntau003" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau006" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau009" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau012" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau015" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau018" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau021" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau024" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau027" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau030" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau033" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau036" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau039" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau042" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau045" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau048" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau051" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau054" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau057" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau060" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau063" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau066" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau069" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau072" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau075" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau078" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau081" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau084" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau090" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau096" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau102" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau108" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau114" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="ntau120" src="" width="250" height="300" onclick="image(this)"></td>
+        </tr>
+        <tr>
+            <td id="p1tau"></td>
+            <td><img id="p1tau009" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau012" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau015" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau018" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau021" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau024" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau027" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau030" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau033" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau036" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau039" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau042" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau045" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau048" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau051" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau054" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau057" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau060" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau063" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau066" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau069" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau072" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau075" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau078" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau081" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau084" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau090" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau096" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau102" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau108" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau114" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p1tau120" src="" width="250" height="300" onclick="image(this)"></td>
+        </tr>
+        <tr>
+            <td id="p2tau"></td>
+            <td><img id="p2tau015" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau018" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau021" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau024" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau027" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau030" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau033" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau036" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau039" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau042" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau045" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau048" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau051" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau054" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau057" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau060" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau063" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau066" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau069" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau072" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau075" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau078" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau081" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau084" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau090" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau096" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau102" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau108" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau114" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p2tau120" src="" width="250" height="300" onclick="image(this)"></td>
+        </tr>
+        <tr>
+            <td id="p3tau"></td>
+            <td><img id="p3tau021" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau024" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau027" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau030" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau033" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau036" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau039" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau042" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau045" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau048" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau051" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau054" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau057" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau060" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau063" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau066" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau069" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau072" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau075" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau078" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau081" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau084" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau090" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau096" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau102" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau108" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau114" src="" width="250" height="300" onclick="image(this)"></td>
+            <td><img id="p3tau120" src="" width="250" height="300" onclick="image(this)"></td>
+        </tr>
+
+    </table>
+
+
+</body>
+
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>For urgent</title>
+</head>
+
+<body>
+
+    <script>
+        // This is the function for strin format//
+        String.prototype.format = function(args) {
+            var str = this;
+            return str.replace(String.prototype.format.regex, function(item) {
+                var intVal = parseInt(item.substring(1, item.length - 1));
+                var replace;
+                if (intVal >= 0) {
+                    replace = args[intVal];
+                } else if (intVal === -1) {
+                    replace = "{";
+                } else if (intVal === -2) {
+                    replace = "}";
+                } else {
+                    replace = "";
+                }
+                return replace;
+            });
+        };
+        String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
+        var td = new Date();
+        var yd = new Date(new Date().setDate(new Date().getDate() - 1));
+        var tds = td.toLocaleDateString().split("/");
+        var yds = yd.toLocaleDateString().split("/");
+        var jude = td.getHours();
+        var lead
+        var startime
+        if (jude <= 6) {
+            lead = "12";
+            startime = new Date(yds[0], yds[1] - 1, yds[2], lead, lead, 0);
+        } else if (jude <= 12) {
+            lead = "18";
+            startime = new Date(yds[0], yds[1] - 1, yds[2], lead, 0, 0);
+        } else if (jude <= 18) {
+            lead = "00";
+            startime = new Date(tds[0], tds[1] - 1, tds[2], 0, 0, 0);
+        } else {
+            lead = "06";
+            startime = new Date(tds[0], tds[1] - 1, tds[2], 6, 0, 0);
+        }
+        //document.write(lead)
+        function intbtn(eachtime) {
+            var stime = eachtime.toLocaleDateString().split("/");
+            var lasthr = eachtime.getHours();
+            var thisyear;
+            var thismonth;
+            var thisday;
+            thisyear = stime[0].slice(2, 4);
+            if (stime[1] < 10) {
+                thismonth = "0" + stime[1];
+            } else {
+                thismonth = stime[1];
+            }
+            if (stime[2] < 10) {
+                thisday = "0" + stime[2];
+            } else {
+                thisday = stime[2];
+            }
+            if (lasthr < 10) {
+                lasthr = "0" + lasthr
+            }
+            return thisyear + thismonth + thisday + lasthr;
+        }
+        //document.write(intbtn(startime));
+
+        var j;
+        var initime = [intbtn(startime)];
+        var tmptime;
+        //document.write(initime)
+        for (j = 1; j < 7; j++) {
+            tmptime = new Date(startime.setHours(startime.getHours() - 6));
+            initime.push(intbtn(tmptime));
+        }
+        //document.write(initime);
+        //document.write(nn)
+        //document.write(initime)
+        var twrftau = ["000", "006", "012", "018", "024", "030", "036", "042", "048", "054", "060", "066", "072", "078", "084", "090", "096", "102", "108", "114", "120"];
+
+        function myFunction1() {
+            for (x in twrftau) {
+                document.getElementById("tau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A01X2B.gif".format([twrftau[x], initime[0]]);
+                if (parseInt(x) > 0) {
+                    document.getElementById("tacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[0]]);
+                    document.getElementById("dacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRFM04_NEW/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[0]]);
+                }
+            }
+            document.getElementById("myButton1").style.color = "red"
+            document.getElementById("myButton2").style.color = "black"
+            document.getElementById("myButton3").style.color = "black"
+            document.getElementById("myButton4").style.color = "black"
+        }
+
+        function myFunction2() {
+            for (x in twrftau) {
+                document.getElementById("tau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A01X2B.gif".format([twrftau[x], initime[1]]);
+                if (parseInt(x) > 0) {
+                    document.getElementById("tacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[1]]);
+                    document.getElementById("dacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRFM04_NEW/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[1]]);
+                }
+            }
+            document.getElementById("myButton2").style.color = "red"
+            document.getElementById("myButton1").style.color = "black"
+            document.getElementById("myButton3").style.color = "black"
+            document.getElementById("myButton4").style.color = "black"
+        }
+
+        function myFunction3() {
+            for (x in twrftau) {
+                document.getElementById("tau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A01X2B.gif".format([twrftau[x], initime[2]]);
+                if (parseInt(x) > 0) {
+                    document.getElementById("tacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[2]]);
+                    document.getElementById("dacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRFM04_NEW/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[2]]);
+                }
+            }
+            document.getElementById("myButton3").style.color = "red"
+            document.getElementById("myButton1").style.color = "black"
+            document.getElementById("myButton2").style.color = "black"
+            document.getElementById("myButton4").style.color = "black"
+        }
+
+        function myFunction4() {
+            for (x in twrftau) {
+                document.getElementById("tau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A01X2B.gif".format([twrftau[x], initime[3]]);
+                if (parseInt(x) > 0) {
+                    document.getElementById("tacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRF_M05/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[3]]);
+                    document.getElementById("dacctau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/WRFM04_NEW/WWW_WRF_F2_{0}_{1}_A-B62T.gif".format([twrftau[x], initime[3]]);
+                }
+            }
+            document.getElementById("myButton4").style.color = "red"
+            document.getElementById("myButton1").style.color = "black"
+            document.getElementById("myButton2").style.color = "black"
+            document.getElementById("myButton3").style.color = "black"
+        }
+
+        function image(img) {
+
+            var src = img.src;
+
+            window.open(src, "box", "height=600,width=600");
+
+        }
+
+        window.onload = myFunction1;
+    </script>
+    <h1>TWRF and WRFD</h1>
+    <input type="button" id="myButton1" value="dd" style="width:120px;height:40px;font-size:20px;" onclick="myFunction1()">
+    <input type="button" id="myButton2" value="dd2" style="width:120px;height:40px;font-size:20px;" onclick="myFunction2()">
+    <input type="button" id="myButton3" value="dd3" style="width:120px;height:40px;font-size:20px;" onclick="myFunction3()">
+    <input type="button" id="myButton4" value="dd4" style="width:120px;height:40px;font-size:20px;" onclick="myFunction4()">
+    <script>
+        myButton = document.getElementById("myButton1"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[0]]); //changes the value
+        myButton = document.getElementById("myButton2"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[1]]); //changes the value
+        myButton = document.getElementById("myButton3"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[2]]); //changes the valu
+        myButton = document.getElementById("myButton4"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[3]]); //changes the valu
+    </script>
+    <br></br>
+    <br></br>
+    <table>
+        <tr>
+            <th>model</th>
+            <th>000</th>
+            <th>000-006</th>
+            <th>000-012</th>
+            <th>012-018</th>
+            <th>012-024</th>
+            <th>024-030</th>
+            <th>024-036</th>
+            <th>036-042</th>
+            <th>036-048</th>
+            <th>048-054</th>
+            <th>048-060</th>
+            <th>060-066</th>
+            <th>060-072</th>
+            <th>072-078</th>
+            <th>072-084</th>
+            <th>084-090</th>
+            <th>084-096</th>
+            <th>096-102</th>
+            <th>096-108</th>
+            <th>108-114</th>
+            <th>108-120</th>
+
+        </tr>
+        <tr>
+            <td>TWRF</td>
+            <td><img id="tau000" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau006" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau012" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau018" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau024" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau030" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau036" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau042" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau048" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau054" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau060" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau066" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau072" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau078" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau084" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau090" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau096" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau102" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau108" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau114" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tau120" src="" width="300" height="300" onclick="image(this)"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th></th>
+            <th>000</th>
+            <th>000-006</th>
+            <th>000-012</th>
+            <th>000-018</th>
+            <th>000-024</th>
+            <th>000-030</th>
+            <th>000-036</th>
+            <th>000-042</th>
+            <th>000-048</th>
+            <th>000-054</th>
+            <th>000-060</th>
+            <th>000-066</th>
+            <th>000-072</th>
+            <th>000-078</th>
+            <th>000-084</th>
+            <th>000-090</th>
+            <th>000-096</th>
+            <th>000-102</th>
+            <th>000-108</th>
+            <th>100-114</th>
+            <th>100-120</th>
+        </tr>
+        <tr>
+            <td>TWRF ACC</td>
+            <td><img src="./nophoto.png" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau006" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau012" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau018" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau024" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau030" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau036" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau042" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau048" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau054" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau060" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau066" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau072" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau078" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau084" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau090" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau096" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau102" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau108" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau114" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="tacctau120" src="" width="300" height="300" onclick="image(this)"></td>
+        </tr>
+        <tr>
+            <td>WRFD ACC</td>
+            <td><img src="./nophoto.png" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau006" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau012" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau018" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau024" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau030" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau036" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau042" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau048" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau054" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau060" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau066" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau072" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau078" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau084" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau090" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau096" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau102" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau108" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau114" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="dacctau120" src="" width="300" height="300" onclick="image(this)"></td>
+        </tr>
+    </table>
+</body>
+
+</html>

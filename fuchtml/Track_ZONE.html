@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>DMS</title>
+</head>
+<html>
+<script>
+    //function myFunction() {
+    //document.getElementById("jtwc").setAttribute("src", "https://www.metoc.navy.mil/jtwc/products/abpwsair.jpg");
+    //}
+    // <img id="jtwc" src="https://www.metoc.navy.mil/jtwc/products/abpwsair.jpg" width="80%"></img>
+    // This is the function for strin format//
+    String.prototype.format = function(args) {
+        var str = this;
+        return str.replace(String.prototype.format.regex, function(item) {
+            var intVal = parseInt(item.substring(1, item.length - 1));
+            var replace;
+            if (intVal >= 0) {
+                replace = args[intVal];
+            } else if (intVal === -1) {
+                replace = "{";
+            } else if (intVal === -2) {
+                replace = "}";
+            } else {
+                replace = "";
+            }
+            return replace;
+        });
+    };
+    String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
+    var td = new Date();
+    var yd = new Date(new Date().setDate(new Date().getDate() - 1));
+    var tds = td.toLocaleDateString().split("/");
+    var yds = yd.toLocaleDateString().split("/");
+    var jude = td.getHours();
+    var lead
+    var startime
+    if (jude <= 6) {
+        lead = "12";
+        startime = new Date(yds[0], yds[1] - 1, yds[2], lead, lead, 0);
+    } else if (jude <= 12) {
+        lead = "18";
+        startime = new Date(yds[0], yds[1] - 1, yds[2], lead, 0, 0);
+    } else if (jude <= 18) {
+        lead = "00";
+        startime = new Date(tds[0], tds[1] - 1, tds[2], 0, 0, 0);
+    } else {
+        lead = "06";
+        startime = new Date(tds[0], tds[1] - 1, tds[2], 6, 0, 0);
+    }
+
+    function intbtn(eachtime) {
+        var stime = eachtime.toLocaleDateString().split("/");
+        var lasthr = eachtime.getHours();
+        var thisyear;
+        var thismonth;
+        var thisday;
+        thisyear = stime[0];
+        if (stime[1] < 10) {
+            thismonth = "0" + stime[1];
+        } else {
+            thismonth = stime[1];
+        }
+        if (stime[2] < 10) {
+            thisday = "0" + stime[2];
+        } else {
+            thisday = stime[2];
+        }
+        if (lasthr < 10) {
+            lasthr = "0" + lasthr
+        }
+        return thisyear + thismonth + thisday + lasthr;
+    }
+    //document.write(intbtn(startime));
+
+    var j;
+    var initime = [intbtn(startime)];
+    var tmptime;
+    //document.write(initime)
+    for (j = 1; j < 7; j++) {
+        tmptime = new Date(startime.setHours(startime.getHours() - 6));
+        initime.push(intbtn(tmptime));
+    }
+
+    //initime = ["2020051606", "2020051906"]
+
+    function myFunction() {
+        document.getElementById("jtwc").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM04/Track_WRFM04_WD01T_{0}_PSTRK.gif".format([initime[0]]));
+        //var Imgs = document.querySelector("#jtwc");
+
+    }
+
+    function myFunction2() {
+        //document.getElementById("jtwc").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM04/Track_WRFM04_WD01T_2020051706_PSTRK.gif");
+
+        var imfd = document.querySelector("#jtwc")
+        var www = imfd.clientWidth;
+        if (parseInt(www) === parseInt(0)) {
+            document.getElementById("showpic").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD02T_{0}_PSTRK.gif".format([initime[0]]));
+        } else if (parseInt(www) > parseInt(100)) {
+            document.getElementById("jtwc").style.display = "none";
+            document.getElementById("showpic").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD02T_{0}_PSTRK.gif".format([initime[0]]));
+        } else {
+            document.getElementById("stat1").innerText = "無產品之可能原因如下";
+            document.getElementById("stat2").innerText = "(1)使用者誤觸，西太平洋現在無TD系統";
+            document.getElementById("stat3").innerText = "(2)須稍等，JMA剛發布西太平洋有TD系統生成或上游已決定不繼續產置";
+        }
+    }
+    window.onload = myFunction;
+</script>
+
+
+<body>
+    <h1>即時颱風路徑預報</h1>
+    <div><input type="button" id="myButton1" value="dd" style="width:120px;height:40px;font-size:20px;" onclick="myFunction2()"></div>
+    <script>
+        myButton = document.getElementById("myButton1"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[0]]); //changes the value
+    </script>
+    <img id="jtwc" style="visibility: hidden;"></img>
+    <img id="showpic"> </img>
+    <p id="stat1"> </p>
+    <p id="stat2"> </p>
+    <p id="stat3"> </p>
+</body>
+
+</HTML>
