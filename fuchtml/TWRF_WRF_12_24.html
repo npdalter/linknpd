@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>For urgent</title>
+</head>
+
+<body>
+
+    <script>
+        // This is the function for strin format//
+        String.prototype.format = function(args) {
+            var str = this;
+            return str.replace(String.prototype.format.regex, function(item) {
+                var intVal = parseInt(item.substring(1, item.length - 1));
+                var replace;
+                if (intVal >= 0) {
+                    replace = args[intVal];
+                } else if (intVal === -1) {
+                    replace = "{";
+                } else if (intVal === -2) {
+                    replace = "}";
+                } else {
+                    replace = "";
+                }
+                return replace;
+            });
+        };
+        String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
+        var td = new Date();
+        var yd = new Date(new Date().setDate(new Date().getDate() - 1));
+        var tds = td.toLocaleDateString().split("/");
+        var yds = yd.toLocaleDateString().split("/");
+        var jude = td.getHours();
+        var lead
+        var startime
+        if (jude <= 6) {
+            lead = "12";
+            startime = new Date(yds[0], yds[1] - 1, yds[2], lead, lead, 0);
+        } else if (jude <= 12) {
+            lead = "18";
+            startime = new Date(yds[0], yds[1] - 1, yds[2], lead, 0, 0);
+        } else if (jude <= 18) {
+            lead = "00";
+            startime = new Date(tds[0], tds[1] - 1, tds[2], 0, 0, 0);
+        } else {
+            lead = "06";
+            startime = new Date(tds[0], tds[1] - 1, tds[2], 6, 0, 0);
+        }
+        //document.write(lead)
+        function intbtn(eachtime) {
+            var stime = eachtime.toLocaleDateString().split("/");
+            var lasthr = eachtime.getHours();
+            var thisyear;
+            var thismonth;
+            var thisday;
+            thisyear = stime[0].slice(2, 4);
+            if (stime[1] < 10) {
+                thismonth = "0" + stime[1];
+            } else {
+                thismonth = stime[1];
+            }
+            if (stime[2] < 10) {
+                thisday = "0" + stime[2];
+            } else {
+                thisday = stime[2];
+            }
+            if (lasthr < 10) {
+                lasthr = "0" + lasthr
+            }
+            return thisyear + thismonth + thisday + lasthr;
+        }
+        //document.write(intbtn(startime));
+
+        var j;
+        var initime = [intbtn(startime)];
+        var tmptime;
+        //document.write(initime)
+        for (j = 1; j < 7; j++) {
+            tmptime = new Date(startime.setHours(startime.getHours() - 6));
+            initime.push(intbtn(tmptime));
+        }
+        //document.write(initime);
+        //document.write(nn)
+        //document.write(initime)
+        var twrftau = ["012", "024", "036", "048", "060", "072", "084", "096", "108", "120"];
+        //var model = ["TWRF","WRF"]
+        var tautau = ["024","048","072","096","120"]
+
+        function myFunction1() {
+            for (x in twrftau) {
+                //document.write(twrftau[x*2+1])
+                document.getElementById("twrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[0]]);
+                document.getElementById("wrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[0]]);
+                if (parseInt(x) < 5) {
+                document.getElementById("twrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[0]]);
+                document.getElementById("wrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[0]]);
+                }
+            }
+            document.getElementById("myButton1").style.color = "red"
+            document.getElementById("myButton2").style.color = "black"
+            document.getElementById("myButton3").style.color = "black"
+            document.getElementById("myButton4").style.color = "black"
+            //document.write(x)
+        }
+
+        function myFunction2() {
+            for (x in twrftau) {
+                document.getElementById("twrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[1]]);
+                document.getElementById("wrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[1]]);
+                if (parseInt(x) < 5) {
+                document.getElementById("twrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[1]]);
+                document.getElementById("wrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[1]]);
+            }
+            }
+            document.getElementById("myButton2").style.color = "red"
+            document.getElementById("myButton1").style.color = "black"
+            document.getElementById("myButton3").style.color = "black"
+            document.getElementById("myButton4").style.color = "black"
+        }
+
+        function myFunction3() {
+            for (x in twrftau) {
+                document.getElementById("twrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[2]]);
+                document.getElementById("wrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[2]]);
+                if (parseInt(x) < 5) {
+                document.getElementById("twrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[2]]);
+                document.getElementById("wrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[2]]);
+            }
+
+            }
+            document.getElementById("myButton3").style.color = "red"
+            document.getElementById("myButton1").style.color = "black"
+            document.getElementById("myButton2").style.color = "black"
+            document.getElementById("myButton4").style.color = "black"
+        }
+
+        function myFunction4() {
+            for (x in twrftau) {
+                document.getElementById("twrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[3]]);
+                document.getElementById("wrftau12" + twrftau[x]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC12HR.png".format([twrftau[x], initime[3]]);
+                if (parseInt(x) < 5) {
+                document.getElementById("twrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBTWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[3]]);
+                document.getElementById("wrftau24" + twrftau[x*2+1]).src = "https://npd.cwb.gov.tw/TAHOPE/irisme_data/TAHOPE/CWB_JJ/DET_CWBWRF_R3000M_{0}_20{1}_ACC24HR.png".format([twrftau[x*2+1], initime[3]]);
+            }
+            }
+            document.getElementById("myButton4").style.color = "red"
+            document.getElementById("myButton1").style.color = "black"
+            document.getElementById("myButton2").style.color = "black"
+            document.getElementById("myButton3").style.color = "black"
+        }
+
+        function image(img) {
+
+            var src = img.src;
+
+            window.open(src, "box", "height=600,width=600");
+
+        }
+
+        window.onload = myFunction1;
+    </script>
+    <h1>TWRF and WRFD ACC RAIN</h1>
+    <input type="button" id="myButton1" value="dd" style="width:120px;height:40px;font-size:20px;" onclick="myFunction1()">
+    <input type="button" id="myButton2" value="dd2" style="width:120px;height:40px;font-size:20px;" onclick="myFunction2()">
+    <input type="button" id="myButton3" value="dd3" style="width:120px;height:40px;font-size:20px;" onclick="myFunction3()">
+    <input type="button" id="myButton4" value="dd4" style="width:120px;height:40px;font-size:20px;" onclick="myFunction4()">
+    <script>
+        myButton = document.getElementById("myButton1"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[0]]); //changes the value
+        myButton = document.getElementById("myButton2"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[1]]); //changes the value
+        myButton = document.getElementById("myButton3"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[2]]); //changes the valu
+        myButton = document.getElementById("myButton4"); //searches for and detects the input element from the 'myButton' id
+        myButton.value = "{0}".format([initime[3]]); //changes the valu
+    </script>
+    <br></br>
+    <br></br>
+    <table>
+        <tr>
+            <th>model</th>
+            <th>000-012</th>
+            <th>012-024</th>
+            <th>024-036</th>
+            <th>036-048</th>
+            <th>048-060</th>
+            <th>060-072</th>
+            <th>072-084</th>
+            <th>084-096</th>
+            <th>096-108</th>
+            <th>108-120</th>
+        </tr>
+        <tr>
+            <td>TWRF ACC12HR</td>
+            <td><img id="twrftau12012" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12024" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12036" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12048" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12060" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12072" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12084" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12096" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12108" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau12120" src="" width="300" height="300" onclick="image(this)"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            
+        </tr>
+        <tr>
+            <td>WRF ACC12HR</td>
+            <td><img id="wrftau12012" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12024" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12036" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12048" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12060" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12072" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12084" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12096" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12108" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau12120" src="" width="300" height="300" onclick="image(this)"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th></th>
+            <th>000-024</th>
+            <th>024-048</th>
+            <th>048-072</th>
+            <th>072-096</th>
+            <th>096-120</th>
+        </tr>
+        <tr>
+            <td>TWRF ACC24HR</td>
+            <td><img id="twrftau24024" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau24048" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau24072" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau24096" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="twrftau24120" src="" width="300" height="300" onclick="image(this)"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            
+        </tr>
+        <tr>
+            <td>WRF ACC24HR</td>
+            <td><img id="wrftau24024" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau24048" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau24072" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau24096" src="" width="300" height="300" onclick="image(this)"></td>
+            <td><img id="wrftau24120" src="" width="300" height="300" onclick="image(this)"></td>
+        </tr>
+    </table>
+</body>
+
+</html>
