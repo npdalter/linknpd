@@ -76,6 +76,7 @@
 
     var j;
     var initime = [intbtn(startime)];
+    //var yyyy = initime[0].slice(0,4);
     var tmptime;
     //document.write(initime)
     for (j = 1; j < 7; j++) {
@@ -84,9 +85,9 @@
     }
 
     //initime = ["2020051606", "2020051906"]
-
+    
     function myFunction() {
-        document.getElementById("jtwc").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM04/Track_WRFM04_WD01T_{0}_PSTRK.gif".format([initime[0]]));
+        document.getElementById("jtwc").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM04/{1}/Track_WRFM04_WD01T_{0}_PSTRK.gif".format([initime[0],initime[0].slice(0,4)]));
         //var Imgs = document.querySelector("#jtwc");
 
     }
@@ -97,16 +98,16 @@
         var imfd = document.querySelector("#jtwc")
         var www = imfd.clientWidth;
         if (parseInt(www) === parseInt(0)) {
-            document.getElementById("showpic").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD02T_{0}_PSTRK.gif".format([initime[0]]));
-            document.getElementById("showpic1").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD01T_{0}_PSTRK.gif".format([initime[0]]));
-            document.getElementById("showpic2").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD02T_{0}_PSBST120.gif".format([initime[0]]));
-            document.getElementById("showpic3").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD01T_{0}_PSBST120.gif".format([initime[0]]));
+            document.getElementById("showpic").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD02T_{0}_PSTRK.gif".format([initime[0],initime[0].slice(0,4)]));
+            document.getElementById("showpic1").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD01T_{0}_PSTRK.gif".format([initime[0],initime[0].slice(0,4)]));
+            document.getElementById("showpic2").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD02T_{0}_PSBST120.gif".format([initime[0],initime[0].slice(0,4)]));
+            document.getElementById("showpic3").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD01T_{0}_PSBST120.gif".format([initime[0],initime[0].slice(0,4)]));
         } else if (parseInt(www) > parseInt(100)) {
             document.getElementById("jtwc").style.display = "none";
-            document.getElementById("showpic").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD02T_{0}_PSTRK.gif".format([initime[0]]));
-            document.getElementById("showpic1").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD01T_{0}_PSTRK.gif".format([initime[0]]));
-            document.getElementById("showpic2").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD02T_{0}_PSBST120.gif".format([initime[0]]));
-            document.getElementById("showpic3").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/Track_WRFM05_WD01T_{0}_PSBST120.gif".format([initime[0]]));
+            document.getElementById("showpic").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD02T_{0}_PSTRK.gif".format([initime[0],initime[0].slice(0,4)]));
+            document.getElementById("showpic1").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD01T_{0}_PSTRK.gif".format([initime[0],initime[0].slice(0,4)]));
+            document.getElementById("showpic2").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD02T_{0}_PSBST120.gif".format([initime[0],initime[0].slice(0,4)]));
+            document.getElementById("showpic3").setAttribute("src", "https://npd.cwb.gov.tw/NPD/irisme_data/grapher/gifdir/Ntrack/WRFM05/{1}/Track_WRFM05_WD01T_{0}_PSBST120.gif".format([initime[0],initime[0].slice(0,4)]));
         } else {
             document.getElementById("stat1").innerText = "無產品之可能原因如下";
             document.getElementById("stat2").innerText = "(1)使用者誤觸，西太平洋現在無TD系統";
