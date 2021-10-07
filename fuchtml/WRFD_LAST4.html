@@ -90,18 +90,18 @@
         //ntau: now, p1tau:previous run p2tau:previous two run ... as so on
         function myFunction1() {
             for (x in twrftau) {
-                document.getElementById("ntau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[x], initime[0]]);
+                document.getElementById("ntau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[x], initime[0], initime[0]]);
                 p1 = parseInt(x) + parseInt(2)
                 if (parseInt(x) < parseInt(32)) {
-                    document.getElementById("p1tau" + twrftau[p1]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p1], initime[1]]);
+                    document.getElementById("p1tau" + twrftau[p1]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p1], initime[1],initime[1]]);
                 }
                 p2 = parseInt(x) + parseInt(4)
                 if (parseInt(x) < parseInt(30)) {
-                    document.getElementById("p2tau" + twrftau[p2]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p2], initime[2]]);
+                    document.getElementById("p2tau" + twrftau[p2]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p2], initime[2],initime[2]]);
                 }
                 p3 = parseInt(x) + parseInt(6)
                 if (parseInt(x) < parseInt(28)) {
-                    document.getElementById("p3tau" + twrftau[p3]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p3], initime[3]]);
+                    document.getElementById("p3tau" + twrftau[p3]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p3], initime[3],initime[3]]);
                 }
             }
 
