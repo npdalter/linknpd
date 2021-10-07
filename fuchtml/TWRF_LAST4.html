@@ -85,23 +85,23 @@
         //document.write(initime);
         //document.write(nn)
         //document.write(initime)
-        var model = ["WRF_M05", "WRFM04_NEW"]
+        var model = ["WRF_M05"]
         var twrftau = ["000", "006", "012", "018", "024", "030", "036", "042", "048", "054", "060", "066", "072", "078", "084", "090", "096", "102", "108", "114", "120"];
         //ntau: now, p1tau:previous run p2tau:previous two run ... as so on
         function myFunction1() {
             for (x in twrftau) {
-                document.getElementById("ntau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[x], initime[0]]);
+                document.getElementById("ntau" + twrftau[x]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[x], initime[0], initime[0]]);
                 p1 = parseInt(x) + parseInt(3)
                 if (parseInt(x) < parseInt(18)) {
-                    document.getElementById("p1tau" + twrftau[p1]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p1], initime[2]]);
+                    document.getElementById("p1tau" + twrftau[p1]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p1], initime[2], initime[2]]);
                 }
                 p2 = parseInt(x) + parseInt(5)
                 if (parseInt(x) < parseInt(16)) {
-                    document.getElementById("p2tau" + twrftau[p2]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p2], initime[4]]);
+                    document.getElementById("p2tau" + twrftau[p2]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p2], initime[4], initime[4]]);
                 }
                 p3 = parseInt(x) + parseInt(7)
                 if (parseInt(x) < parseInt(14)) {
-                    document.getElementById("p3tau" + twrftau[p3]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p3], initime[6]]);
+                    document.getElementById("p3tau" + twrftau[p3]).src = "https://npd.cwb.gov.tw/NWPDMS/irisme_data/grapher/gifdir/Nwww/{0}/{3}/WWW_WRF_F2_{1}_{2}_A01X2B.gif".format([model[0], twrftau[p3], initime[6], initime[6]]);
                 }
             }
             document.getElementById("ntau").innerText = "{0}".format([initime[0]])
